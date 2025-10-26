@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aya ♥ Mahmoud — Love Page</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1:#1b0b17; 
+  --bg2:#3a0d2a; 
+  --accent:#ff7aa0; 
+  --accent2:#ffbfd0;
+  --rose:#ff4c8b;
+  --heartGlow:#ff6b81;
+}
+
+/* Reset */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+html,body{height:100%;overflow-x:hidden;}
+body{
+  display:flex;justify-content:center;align-items:center;
+  background:radial-gradient(circle at top left, rgba(255,122,160,0.1), transparent), 
+             linear-gradient(135deg, var(--bg1), var(--bg2));
+  color:#fff;
+  overflow-x:hidden;
+  position:relative;
+  animation:bgShift 20s ease-in-out infinite alternate;
+}
+
+/* Background gradient animation */
+@keyframes bgShift{
+  0%{background:radial-gradient(circle at top left, rgba(255,122,160,0.1), transparent), linear-gradient(135deg, #1b0b17, #3a0d2a);}
+  50%{background:radial-gradient(circle at top left, rgba(255,100,140,0.2), transparent), linear-gradient(135deg, #3a0d2a, #5a1f3c);}
+  100%{background:radial-gradient(circle at top left, rgba(255,122,160,0.1), transparent), linear-gradient(135deg, #1b0b17, #3a0d2a);}
+}
+
+/* Bokeh / floating lights */
+.bokeh{position:absolute;width:15px;height:15px;background:radial-gradient(circle,#fff,#fff0);border-radius:50%;opacity:0.7;animation:floatBokeh 10s linear infinite;}
+@keyframes floatBokeh{
+  0%{transform:translateY(100vh) scale(0.5); opacity:0;}
+  50%{opacity:0.8;}
+  100%{transform:translateY(-20vh) scale(1); opacity:0;}
+}
+
+.wrap{
+  width:min(960px,95vw); padding:25px; border-radius:25px;
+  background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));
+  box-shadow:0 20px 50px rgba(0,0,0,0.7); position:relative; overflow:hidden;
+}
+
+header{
+  display:flex;align-items:center;gap:15px;
+}
+
+.avatar{
+  width:80px;height:80px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex;justify-content:center;align-items:center;
+  font-size:36px;font-weight:900;color:white;cursor:pointer;
+  box-shadow:0 0 20px var(--accent2);
+  transition: transform 0.2s;
+}
+.avatar:hover{transform:scale(1.1);}
+
+h1{font-size:28px; font-weight:700;font-family:'Dancing Script', cursive;}
+.sub{opacity:0.9;font-size:15px;font-family:'Dancing Script', cursive;}
+
+.main{display:flex;gap:20px;margin-top:20px;flex-wrap:wrap;}
+.left{flex:1;min-width:280px;}
+.right{width:340px;min-width:220px;}
+
+.stage{
+  display:flex;flex-direction:column;align-items:center;
+  padding:20px;border-radius:18px;
+  background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);
+  min-height:320px; position:relative;
+}
+
+.big-heart{
+  width:180px;height:180px;border-radius:50%;
+  display:grid;place-items:center;
+  background:radial-gradient(circle at 35% 30%, #ff9bb3, #ff4c8b);
+  box-shadow:0 0 20px #ff4c8b,0 0 40px #ff6b81, inset 0 0 15px #ffbfd0;
+  cursor:pointer; transition:transform .2s, box-shadow .3s;
+  animation:pulseHeart 2s infinite;
+}
+@keyframes pulseHeart{
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.08);}
+}
+
+.heart-icon{font-size:60px;}
+.hint{margin-top:14px;font-size:15px;opacity:0.95;text-align:center;font-family:'Dancing Script', cursive;}
+
+.controls{
+  display:flex;gap:12px;margin-top:18px;flex-wrap:wrap;justify-content:center;
+}
+.btn{
+  background:var(--accent);border:none;padding:10px 16px;border-radius:14px;
+  color:white;font-weight:700;cursor:pointer;box-shadow:0 8px 28px rgba(255,122,160,0.15);
+  transition: transform .2s, box-shadow .2s;
+  font-family:'Dancing Script', cursive;
+}
+.btn:hover{transform:scale(1.05);box-shadow:0 12px 32px rgba(255,122,160,0.25);}
+.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.08);}
+
+.popup{
+  position:fixed;left:50%;top:16%;transform:translateX(-50%);
+  min-width:240px;max-width:86vw;
+  background:white;color:#07101a;
+  padding:16px;border-radius:14px;box-shadow:0 32px 90px rgba(4,12,30,0.35);
+  z-index:80;display:none;text-align:center;
+}
+.popup.open{display:block;}
+.popup h3{margin-bottom:6px;font-family:'Dancing Script', cursive;}
+.popup p{line-height:1.6;font-size:15px;font-family:'Dancing Script', cursive;}
+.popup .meta{font-size:12px;color:rgba(7,16,26,0.6);margin-top:6px;}
+
+.letter-modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:linear-gradient(to bottom, rgba(2,6,23,0.8), rgba(2,6,23,0.95));z-index:90;padding:18px;}
+.letter-modal.open{display:flex;}
+.letter{
+  width:min(820px,96vw);max-height:86vh;overflow:auto;background:white;color:#07101a;
+  border-radius:14px;padding:25px;box-shadow:0 30px 90px rgba(2,6,23,0.6);position:relative;
+  font-family:'Dancing Script', cursive;
+}
+.letter .close{position:absolute;right:14px;top:14px;border:0;background:transparent;font-size:22px;cursor:pointer;}
+
+.sidebox{padding:14px;border-radius:14px;background:rgba(255,255,255,0.02);margin-bottom:12px;}
+ul{margin-top:8px;line-height:1.6;font-size:14px;}
+
+.hearts-layer{position:absolute;inset:0;pointer-events:none;z-index:10;}
+.tiny-heart{
+  position:absolute;width:24px;height:24px;transform:translate(-50%,-50%) rotate(-15deg);
+  animation: floatUp 2s forwards;
+}
+@keyframes floatUp{
+  0%{opacity:1; transform:translate(-50%,0) rotate(0deg);}
+  100%{opacity:0; transform:translate(-50%,-180px) rotate(360deg);}
+}
+
+.rose{
+  position:absolute;width:30px;height:30px;pointer-events:none;
+  animation: floatRose 5s linear infinite;
+}
+@keyframes floatRose{
+  0%{transform:translateY(100%) rotate(0deg);}
+  100%{transform:translateY(-120%) rotate(360deg);}
+}
+
+footer{margin-top:18px;display:flex;justify-content:space-between;align-items:center;font-size:13px;opacity:0.9;text-align:center;flex-wrap:wrap;}
+
+/* Mouse hearts trail */
+.mouse-heart{
+  position:absolute;width:20px;height:20px;pointer-events:none;
+  animation:mouseFloat 1.2s forwards;
+}
+@keyframes mouseFloat{
+  0%{opacity:1; transform:translate(0,0) scale(1);}
+  100%{opacity:0; transform:translate(-10px,-40px) scale(1.3);}
+}
+
+/* Confetti */
+.confetti{
+  position:absolute; width:10px; height:10px; background-color:#ff7aa0; opacity:0.8; pointer-events:none; z-index:50;
+  transform: rotate(0deg);
+  animation:confettiFall 2s forwards;
+}
+@keyframes confettiFall{
+  0%{opacity:1; transform:translate(0,0) rotate(0deg);}
+  100%{opacity:0; transform:translate(var(--dx,50px),150px) rotate(360deg);}
+}
+
+/* Floating words */
+.floating-word{
+  position:absolute; font-size:16px; font-family:'Dancing Script', cursive; color:#ff4c8b; opacity:0.9; pointer-events:none;
+  animation:floatWord 2.5s forwards;
+}
+@keyframes floatWord{
+  0%{opacity:1; transform:translateY(0);}
+  100%{opacity:0; transform:translateY(-100px);}
+}
+</style>
+</head>
+<body>
+<!-- Bokeh lights -->
+<script>
+for(let i=0;i<20;i++){
+  const b=document.createElement('div');
+  b.className='bokeh';
+  b.style.left=Math.random()*window.innerWidth+'px';
+  b.style.top=Math.random()*window.innerHeight+'px';
+  b.style.width=5+Math.random()*15+'px';
+  b.style.height=b.style.width;
+  b.style.animationDuration=8+Math.random()*5+'s';
+  document.body.appendChild(b);
+}
+</script>
+
+<div class="wrap" id="wrap">
+  <div class="hearts-layer" id="heartsLayer"></div>
+
+  <header>
+    <div class="avatar" id="avatar">A</div>
+    <div>
+      <h1>Aya → Mahmoud</h1>
+      <div class="sub">Tap the heart — each click reveals a romantic message 💖 Works on phone.</div>
+    </div>
+    <div style="margin-left:auto;display:flex;flex-direction:column;align-items:flex-end">
+      <div style="font-size:12px;opacity:0.9">From Morocco 🇲🇦 to Egypt 🇪🇬</div>
+      <div style="margin-top:6px;display:flex;gap:8px">
+        <button class="btn ghost" id="downloadBtn">Download HTML</button>
+        <button class="btn ghost" id="playBtn">Play Music</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="left">
+      <div class="stage">
+        <div class="big-heart" id="bigHeart" aria-label="Click for love" role="button">
+          <div class="heart-icon">❤️</div>
+        </div>
+        <div class="hint">Click the heart for kisses, love lines, and sweet surprises 💋</div>
+        <div class="controls">
+          <button class="btn" id="clickLove">Click for Love</button>
+          <button class="btn ghost" id="multiHearts">Show 5 Hearts</button>
+          <button class="btn ghost" id="openLetter">Open Letter</button>
+        </div>
+      </div>
+    </div>
+
+    <aside class="right">
+      <div class="sidebox">
+        <strong>How it works</strong>
+        <ul>
+          <li>Tap the big heart — each click picks a random message.</li>
+          <li>Messages appear in a popup you can read or share.</li>
+          <li>Tap the avatar to change the initial.</li>
+        </ul>
+      </div>
+      <div class="sidebox">
+        <strong>Mahmmoudy</strong>
+        <div style="margin-top:8px;font-size:13px;opacity:0.95"><code></code>Oofff how much I adore you</div>
+      </div>
+    </aside>
+  </div>
+
+  <footer>
+    <div>Made with ♥ by Aya</div>
+    <div style="opacity:0.9">Mobile-friendly • Romantic</div>
+  </footer>
+
+  <div class="popup" id="popup"></div>
+
+  <div class="letter-modal" id="letterModal">
+    <div class="letter">
+      <button class="close" id="closeLetter">✕</button>
+      <h2>My Love Letter</h2>
+      <p>Dear Mahmoud,</p>
+      <p>Every beat of this heart is a little message from me to you. Even if miles separate us, my thoughts carry your name. I miss you, I love you, and I dream of our next hug.</p>
+      <p>All my love,<br><strong>Aya ♥</strong></p>
+    </div>
+  </div>
+</div>
+
+<audio id="bgMusic" loop preload="auto">
+  <source src="song.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<script>
+// ===== Messages =====
+const MESSAGES=[
+  {lang:'en', type:'short', text:'I love you, Mahmoud. Kisses 💋'},
+  {lang:'ar', type:'short', text:'بحبك يا محمود ❤️'},
+  {lang:'en', type:'short', text:'You are my everything.'},
+  {lang:'en', type:'long', text:'Mahmoud — every code line carries my love. I miss you deeply.'},
+  {lang:'ar', type:'long', text:'محمود، قلبي معك دائمًا حتى لو بعيد.'}
+];
+
+const bigHeart=document.getElementById('bigHeart');
+const clickLove=document.getElementById('clickLove');
+const multiHearts=document.getElementById('multiHearts');
+const popup=document.getElementById('popup');
+const heartsLayer=document.getElementById('heartsLayer');
+const openLetter=document.getElementById('openLetter');
+const letterModal=document.getElementById('letterModal');
+const closeLetter=document.getElementById('closeLetter');
+const avatar=document.getElementById('avatar');
+const playBtn=document.getElementById('playBtn');
+const downloadBtn=document.getElementById('downloadBtn');
+const bgMusic=document.getElementById('bgMusic');
+
+// ===== Helpers =====
+function randomMessage(){ return MESSAGES[Math.floor(Math.random()*MESSAGES.length)]; }
+
+// Typing popup effect
+function typePopup(msg){
+  popup.innerHTML = `<h3>${msg.lang==='ar'?'رسالة':'Message'}</h3><p></p><div class="meta">${msg.lang==='ar'?'Arabic':'English'} • ${msg.type}</div>`;
+  const p = popup.querySelector('p');
+  let i = 0;
+  popup.classList.add('open');
+  clearTimeout(popup.hideTimeout);
+  let interval = setInterval(()=>{
+    p.textContent += msg.text[i];
+    i++;
+    if(i>=msg.text.length) clearInterval(interval);
+  }, 50);
+  popup.hideTimeout=setTimeout(()=>popup.classList.remove('open'), msg.text.length*50 + 2500);
+}
+
+// Hearts / roses
+function makeTinyHeart(x,y){
+  const h=document.createElement('div');
+  h.className='tiny-heart';
+  h.style.left=x+'px';
+  h.style.top=y+'px';
+  h.innerHTML='❤️';
+  heartsLayer.appendChild(h);
+  setTimeout(()=>h.remove(),2200);
+}
+
+function makeRose(){
+  const rose=document.createElement('img');
+  rose.src='Rose.jpg';
+  rose.className='rose';
+  rose.style.left=Math.random()*window.innerWidth+'px';
+  rose.style.width=20+Math.random()*20+'px';
+  rose.style.height='auto';
+  document.body.appendChild(rose);
+  setTimeout(()=>rose.remove(),5000);
+}
+
+// Floating words
+function makeWord(x,y){
+  const words=["Love","Forever","❤️","Kisses","Sweet"];
+  const w = document.createElement('div');
+  w.className='floating-word';
+  w.textContent = words[Math.floor(Math.random()*words.length)];
+  w.style.left=x+'px';
+  w.style.top=y+'px';
+  document.body.appendChild(w);
+  setTimeout(()=>w.remove(),2500);
+}
+
+// Confetti burst
+function makeConfetti(x,y){
+  for(let i=0;i<12;i++){
+    const c = document.createElement('div');
+    c.className='confetti';
+    c.style.left = x+'px';
+    c.style.top = y+'px';
+    c.style.setProperty('--dx', (Math.random()-0.5)*100+'px');
+    c.style.backgroundColor = `hsl(${Math.random()*360},70%,70%)`;
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),2000);
+  }
+}
+
+// Mouse hearts trail
+document.addEventListener('mousemove',e=>{
+  const h=document.createElement('div');
+  h.className='mouse-heart';
+  h.style.left=e.clientX+'px';
+  h.style.top=e.clientY+'px';
+  h.innerHTML='❤️';
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),1200);
+});
+
+function handleLoveClick(x,y){
+  typePopup(randomMessage());
+  for(let i=0;i<5;i++) setTimeout(()=>makeTinyHeart(x + (Math.random()-0.5)*60, y + (Math.random()-0.5)*40), i*80);
+  makeRose(); makeRose();
+  makeWord(x,y);
+  makeConfetti(x,y);
+  heartbeatEffect();
+  startMusicOnInteraction();
+}
+
+// Heartbeat effect
+function heartbeatEffect(){
+  bigHeart.style.transform='scale(1.2)';
+  setTimeout(()=>bigHeart.style.transform='scale(1)',200);
+}
+
+bigHeart.addEventListener('click',(e)=>{handleLoveClick(e.clientX,e.clientY);});
+clickLove.addEventListener('click',(e)=>{handleLoveClick(window.innerWidth/2, window.innerHeight/2);});
+
+multiHearts.addEventListener('click',()=>{for(let i=0;i<6;i++){setTimeout(()=>{makeTinyHeart(Math.random()*window.innerWidth,window.innerHeight-40);makeRose();makeConfetti(Math.random()*window.innerWidth, window.innerHeight-40)},i*120);}});
+
+openLetter.addEventListener('click',()=>{
+  letterModal.classList.add('open');
+  // Fireworks effect behind letter
+  for(let i=0;i<10;i++) setTimeout(()=>makeConfetti(window.innerWidth/2, window.innerHeight/2), i*150);
+});
+closeLetter.addEventListener('click',()=>letterModal.classList.remove('open'));
+letterModal.addEventListener('click',(e)=>{if(e.target===letterModal) letterModal.classList.remove('open');});
+
+avatar.addEventListener('click',()=>{ const val=prompt('Change avatar initial (single letter):','A'); if(val) avatar.textContent=val[0].toUpperCase(); });
+
+downloadBtn.addEventListener('click', ()=>{
+  const html='<!doctype html>\n'+document.documentElement.outerHTML;
+  const blob=new Blob([html],{type:'text/html'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download='Aya_for_Mahmoud.html';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+});
+
+let musicPlaying=false;
+function toggleMusic(){
+  if(!musicPlaying){bgMusic.play().catch(()=>{});musicPlaying=true;playBtn.textContent='Pause Music';} 
+  else{bgMusic.pause();musicPlaying=false;playBtn.textContent='Play Music';}
+}
+function startMusicOnInteraction(){if(!musicPlaying){bgMusic.play().catch(()=>{});musicPlaying=true;playBtn.textContent='Pause Music';}}
+playBtn.addEventListener('click',toggleMusic);
+document.addEventListener('click',startMusicOnInteraction,{once:true});
+
+if(/Mobi|Android/i.test(navigator.userAgent))document.querySelector('.hint').textContent='Tap the heart — each tap shows a new surprise message.';
+
+document.addEventListener('keydown',(e)=>{if(e.key==='Escape'){popup.classList.remove('open');letterModal.classList.remove('open');}});
+</script>
+</body>
+</html>
